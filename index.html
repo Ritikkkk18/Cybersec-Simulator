@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSec Simulator | Network Security Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div style="font-weight: bold; font-size: 18px; color: var(--blue)">
+            🛡️ CyberSec <span style="color:white">Simulator</span>
+        </div>
+        <div class="nav-actions">
+            <label style="font-size: 12px; color: var(--muted)">
+                <input type="checkbox" id="learn-mode"> Learning Mode
+            </label>
+            <button style="width: auto; padding: 5px 15px; background: var(--border)" onclick="exportCSV()">Export CSV</button>
+        </div>
+    </nav>
+
+    <main>
+        <!-- LEFT: Devices -->
+        <aside class="sidebar">
+            <div class="panel-title">Network Devices</div>
+            <div id="device-list">
+                <!-- Data populated via JS -->
+                <div class="card" style="border-left: 4px solid var(--red)">
+                    <strong>Hacker (External)</strong><br>
+                    <small style="font-family: monospace">10.0.0.99</small>
+                </div>
+                <div class="card">
+                    <strong>Router</strong><br>
+                    <small style="font-family: monospace">10.0.0.1</small>
+                </div>
+                <div class="card">
+                    <strong>Firewall / IDS</strong><br>
+                    <small style="font-family: monospace">192.168.1.1</small>
+                </div>
+                <div class="card">
+                    <strong>Server</strong><br>
+                    <small style="font-family: monospace">192.168.1.20</small>
+                </div>
+                <div class="card">
+                    <strong>Workstation PC</strong><br>
+                    <small style="font-family: monospace">192.168.1.10</small>
+                </div>
+            </div>
+        </aside>
+
+        <!-- CENTER: Canvas & Logs -->
+        <section class="center-content">
+            <div id="diagram" class="diagram-container">
+                <!-- Lines and Nodes rendered via JS -->
+            </div>
+            
+            <div id="summary-bar" class="summary-bar">
+                <div style="color: var(--muted)">No active simulation. Select an attack type from the sidebar.</div>
+            </div>
+
+            <div class="log-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Source IP</th>
+                            <th>Target IP</th>
+                            <th>Port</th>
+                            <th>Proto</th>
+                            <th>Rule</th>
+                            <th>Severity</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="alert-body">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- RIGHT: Rules & Attacks -->
+        <aside class="sidebar sidebar-right">
+            <div class="panel-title">Add Security Rule</div>
+            <form id="rule-form">
+                <input type="text" id="r-name" placeholder="Rule Name (e.g. SSH Guard)" required>
+                <select id="r-type" onchange="onRuleTypeChange()">
+                    <option value="port_block">Port Block</option>
+                    <option value="rate_limit">Rate Limit</option>
+                    <option value="icmp_flood">ICMP Flood</option>
+                    <option value="login_threshold">Login Threshold</option>
+                </select>
+                <input type="number" id="r-port" placeholder="Port (e.g. 22)">
+                <input type="number" id="r-threshold" placeholder="Threshold (pkts/sec)" style="display:none">
+                <select id="r-protocol">
+                    <option value="TCP">TCP</option>
+                    <option value="UDP">UDP</option>
+                    <option value="ICMP">ICMP</option>
+                </select>
+                <select id="r-action">
+                    <option value="Alert">Alert Only</option>
+                    <option value="Block">Block Only</option>
+                    <option value="Block+Alert">Block + Alert</option>
+                </select>
+                <select id="r-severity">
+                    <option value="Info">Info</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                    <option value="Critical">Critical</option>
+                </select>
+                <div style="font-size: 11px; color: var(--muted); margin-bottom: 5px">Replace Existing Rule (Optional):</div>
+                <select id="r-replace">
+                    <option value="">-- No Replacement --</option>
+                </select>
+                <button type="submit">Create Rule</button>
+            </form>
+
+            <div id="rules-list" style="margin-top: 20px">
+                <!-- Rules populated via JS -->
+            </div>
+
+            <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid var(--border)">
+                <div class="panel-title">Attack Simulator</div>
+                <button class="btn-attack btn-scan" onclick="launchAttack('port_scan')">Launch Port Scan</button>
+                <button class="btn-attack btn-ssh" onclick="launchAttack('brute_force')">SSH Brute Force</button>
+                <button class="btn-attack btn-ping" onclick="launchAttack('ping_flood')">ICMP Ping Flood</button>
+            </div>
+        </aside>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+:root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --card: #20242f;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --border: #2d3748;
+    --blue: #3b82f6;
+    --red: #ef4444;
+    --green: #22c55e;
+    --amber: #f59e0b;
+    --accent: #6366f1;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Nav */
+nav {
+    height: 50px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    justify-content: space-between;
+}
+
+.nav-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+/* Three-column layout */
+main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 220px 1fr 260px;
+    overflow: hidden;
+}
+
+/* Sidebars */
+.sidebar {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+}
+
+.sidebar-right {
+    border-right: none;
+    border-left: 1px solid var(--border);
+}
+
+/* Center Content */
+.center-content {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Network Diagram */
+.diagram-container {
+    height: 50%;
+    position: relative;
+    background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+}
+
+.device-node {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.device-node svg {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 5px;
+}
+
+.device-node.hacker {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: var(--red);
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
+}
+
+/* Connection Lines */
+.connection-line {
+    position: absolute;
+    height: 2px;
+    background: var(--blue);
+    opacity: 0.5;
+    z-index: 1;
+    transform-origin: left center;
+    pointer-events: none;
+}
+
+/* Alert Table */
+.log-container {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background: var(--bg);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+th {
+    text-align: left;
+    padding: 10px;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+}
+
+.severity-critical { background: rgba(69, 10, 10, 0.4); }
+.severity-high { background: rgba(67, 20, 7, 0.4); }
+.severity-medium { background: rgba(66, 32, 6, 0.4); }
+.severity-info { background: rgba(12, 26, 74, 0.4); }
+.severity-allow { background: rgba(14, 69, 10, 0.3); border-left: 3px solid var(--green); }
+
+/* Forms & UI */
+.panel-title {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+input, select, button {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    font-size: 12px;
+}
+
+button {
+    background: var(--accent);
+    color: white;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+    transition: filter 0.2s;
+}
+
+button:hover { filter: brightness(1.2); }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-test {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    margin-top: 10px;
+    font-size: 11px;
+    padding: 4px;
+}
+
+.btn-test:hover {
+    background: var(--accent);
+    color: white;
+}
+
+.btn-attack {
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.btn-scan { background: #64748b; }
+.btn-ssh { background: #f59e0b; }
+.btn-ping { background: #ef4444; }
+
+/* Rule Badges */
+.badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+/* Animations */
+@keyframes pulse-scan {
+    0% { background-color: var(--blue); box-shadow: 0 0 0px var(--accent); }
+    50% { background-color: var(--accent); box-shadow: 0 0 20px var(--accent); }
+    100% { background-color: var(--blue); box-shadow: 0 0 0px var(--accent); }
+}
+
+@keyframes pulse-brute {
+    0% { background-color: var(--blue); box-shadow: 0 0 0px var(--amber); }
+    30% { background-color: var(--amber); box-shadow: 0 0 20px var(--amber); }
+    60% { background-color: var(--blue); box-shadow: 0 0 0px var(--amber); }
+    100% { background-color: var(--blue); box-shadow: 0 0 0px var(--amber); }
+}
+
+@keyframes pulse-flood {
+    0% { background-color: var(--blue); box-shadow: 0 0 0px var(--red); }
+    25% { background-color: var(--red); box-shadow: 0 0 25px var(--red); }
+    50% { background-color: var(--blue); box-shadow: 0 0 25px var(--blue); }
+    75% { background-color: var(--red); box-shadow: 0 0 25px var(--red); }
+    100% { background-color: var(--blue); box-shadow: 0 0 0px var(--red); }
+}
+
+.attacking-scan {
+    animation: pulse-scan 0.3s infinite;
+    opacity: 1;
+    z-index: 3;
+}
+
+.attacking-brute {
+    animation: pulse-brute 0.8s infinite;
+    opacity: 1;
+    z-index: 3;
+}
+
+.attacking-flood {
+    animation: pulse-flood 0.2s infinite;
+    opacity: 1;
+    z-index: 3;
+}
+
+@keyframes blink-red {
+    0% { border-color: var(--border); }
+    50% { border-color: var(--red); box-shadow: 0 0 15px var(--red); }
+    100% { border-color: var(--border); }
+}
+
+.targeted {
+    animation: blink-red 0.5s infinite;
+}
+
+@keyframes flash-green {
+    0% { background: var(--card); }
+    50% { background: var(--green); box-shadow: 0 0 20px var(--green); }
+    100% { background: var(--card); }
+}
+
+.blocked {
+    animation: flash-green 0.5s 2;
+}
+
+/* Enhanced Node Effects */
+@keyframes radar-sweep {
+    0% { transform: rotate(0deg); opacity: 0; }
+    50% { opacity: 0.5; }
+    100% { transform: rotate(360deg); opacity: 0; }
+}
+
+.radar-sweep::after {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, transparent, var(--accent), transparent 90deg);
+    top: -50%;
+    left: -50%;
+    z-index: 0;
+    animation: radar-sweep 2s linear infinite;
+    pointer-events: none;
+    border-radius: 50%;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-2px, -2px); }
+    50% { transform: translate(2px, 2px); }
+    75% { transform: translate(-2px, 2px); }
+}
+
+.shaking {
+    animation: shake 0.1s infinite;
+}
+
+/* Packet Particles */
+.packet {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    z-index: 10;
+    pointer-events: none;
+    box-shadow: 0 0 8px currentColor;
+    transition: all 0.5s linear;
+}
+
+.packet-malicious { color: var(--red); background: var(--red); }
+.packet-normal { color: var(--blue); background: var(--blue); }
+.packet-blocked { color: var(--green); background: var(--green); }
+
+/* Rule List Glow */
+@keyframes item-glow {
+    0% { border-color: var(--border); }
+    50% { border-color: var(--accent); box-shadow: 0 0 15px var(--accent); }
+    100% { border-color: var(--border); }
+}
+
+.new-rule-glow {
+    animation: item-glow 1s ease-in-out;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+}
+
+/* Summary Bar */
+.summary-bar {
+    padding: 10px 20px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.threat-score {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.detail-row {
+    background: rgba(0,0,0,0.3);
+    font-style: italic;
+    color: var(--muted);
+}
