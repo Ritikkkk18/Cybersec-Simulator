@@ -1,4 +1,4 @@
-# Network Security Simulator (CyberSec)
+# Cybersec Simulator
 
 An interactive, web-based network security dashboard designed for teaching cybersecurity concepts through real-time traffic visualization and attack simulations.
 
