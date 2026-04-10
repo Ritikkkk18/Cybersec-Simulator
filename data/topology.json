@@ -1,0 +1,13 @@
+{
+  "devices": [
+    { "id":"hacker",   "label":"Hacker",   "ip":"10.0.0.99",    "icon":"skull" },
+    { "id":"router",   "label":"Router",   "ip":"10.0.0.1",     "icon":"router" },
+    { "id":"firewall", "label":"Firewall", "ip":"192.168.1.1",  "icon":"shield" },
+    { "id":"server",   "label":"Server",   "ip":"192.168.1.20", "icon":"server" },
+    { "id":"pc",       "label":"PC",       "ip":"192.168.1.10", "icon":"pc" }
+  ],
+  "connections": [
+    ["hacker","router"],["router","firewall"],
+    ["firewall","server"],["firewall","pc"]
+  ]
+}

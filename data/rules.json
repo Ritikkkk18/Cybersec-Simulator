@@ -1,0 +1,40 @@
+[
+  {
+    "id": "r1",
+    "name": "SSH Guard",
+    "type": "login_threshold",
+    "port": 22,
+    "threshold": 5,
+    "protocol": "TCP",
+    "action": "Block+Alert",
+    "severity": "Critical"
+  },
+  {
+    "id": "r2",
+    "name": "ICMP Guard",
+    "type": "icmp_flood",
+    "threshold": 20,
+    "protocol": "ICMP",
+    "action": "Block+Alert",
+    "severity": "High"
+  },
+  {
+    "id": "r3",
+    "name": "Port Scan Guard",
+    "type": "rate_limit",
+    "threshold": 100,
+    "protocol": "TCP",
+    "action": "Alert",
+    "severity": "Medium"
+  },
+  {
+    "name": "Telnet_Blocker",
+    "type": "port_block",
+    "port": 23,
+    "threshold": null,
+    "protocol": "TCP",
+    "action": "Block+Alert",
+    "severity": "High",
+    "id": "r1775847890"
+  }
+]
